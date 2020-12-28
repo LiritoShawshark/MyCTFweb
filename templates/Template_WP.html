@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>WriteUP</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			body {
+				background-image: url(../static/images/Template_Pro.jpg);
+				background-size: cover;
+			}
+			#bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+			.hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			#top {
+				background-color: rgba(0, 255, 255, 0.1);
+				border: 2px solid #00868B;
+				border-radius: 20px;
+				font-family: "Italic";
+				font-size: 40px;
+				height: 100px; 
+				margin-top: 0%;
+				color: white;
+			}
+			#total {
+				font-family: "Italic";
+				font-size: 20px;
+				text-align: right;
+			}
+			.each { /*题解的每一部分*/
+				height: 200px;
+				border-bottom: 2px solid gold;
+				border-image: linear-gradient(to right, blue, white, blue) 10 10;
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+			.title {
+				font-family: "times new roman";
+				font-size: 30px;
+				margin-bottom: 20px;
+				margin-top: 10px;
+				color: white;
+			}
+			.intro {
+				font-family: "Italic";
+				font-size: 20px;
+				text-indent: 40px;
+				margin-bottom: 60px;
+				color: white;
+				font-weight: bolder;
+			}
+			.like {
+				text-align: right;
+				font-size: 30px;
+				font-family: "CommercialScript BT";
+				color: whitesmoke;
+			}
+			.glyphicon-thumbs-up:hover {
+				color: gold;
+				cursor: pointer;
+			}
+			#slide {
+				background-color: rgba(0, 0, 0, 0.2);
+				text-align: center;
+				font-family: "CommercialScript BT";
+				font-size: 30px;
+			}
+            #logo {
+				font-family: "Calibri (正文)";
+				font-size: 30px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+		</style>
+		
+		<script>
+		           
+				    function Click(arg_0)
+                    {
+                        return function() {
+
+                            var xmlhttp;
+                            xmlhttp = new XMLHttpRequest();
+                                xmlhttp.onreadystatechange=function()
+                                {
+                                    if (xmlhttp.readyState===4 && xmlhttp.status===200)
+                                    {
+                                        //alert(xmlhttp.responseText);
+                                        window.location.href = "../wp_list/?id={{ pro_id }}&page={{ page }}";
+                                    }
+                                };
+
+                            xmlhttp.open("GET", "../agree_wp/?id=" + arg_0, true);
+                            xmlhttp.send();
+                        }
+                    }
+					window.onload = function()
+					{
+						var problems = document.getElementById("problems");
+						var teams = document.getElementById("teams");
+						var rank = document.getElementById("rank");
+						var login = document.getElementById("login");
+						var register = document.getElementById("register");
+						var flag = document.getElementById("flag_ip");
+						var btn = document.getElementById("submit");
+						var wp_btn = document.getElementById("wp_upload");
+						var like = document.getElementsByClassName("glyphicon-thumbs-up");
+						var x;
+
+						problems.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+                        };
+                        problems.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+                        };
+						
+						rank.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						rank.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+						
+						teams.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						teams.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+						
+						login.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						login.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+						
+						register.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						register.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+						
+						<!-- 导航栏按钮 -->
+						problems.onclick = function() {
+							window.location.href = "/problems/"
+						};
+						rank.onclick = function() {
+					        window.location.href = "../rank/?type=1&page=1"
+				        };
+		
+						teams.onclick = function() {
+                            window.location.href = "/team/"
+						};
+		
+						login.onclick = function() {
+                            {% if login_name %}
+                                window.location.href = '/logout/';
+                            {% else %}
+                                window.location.href = "/login/";
+                            {% endif %}
+                        };
+                        register.onclick = function() {
+                            {% if login_name %}
+                                window.location.href = '/info/?id={{ user.id }}';
+                            {% else %}
+                                window.location.href = "/regist/";
+                            {% endif %}
+                        };
+						
+						wp_btn.onclick = function()
+						{
+							window.location.href = "/wp_upload/{{ pro_id }}";
+						};
+
+						for (x = 0; x < like.length; x++)
+                        {
+                            like[x].onclick = Click(like[x].id);
+                        }
+						document.getElementById("logo").onclick = function() {
+                            window.location.href = "/"
+                        }
+					}
+				</script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<!-- 导航条 -->
+				<div id="bar" class="row">
+                    <div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+					
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+					
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Team
+						</span>
+					</div>
+					
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div> 
+			<!-- 导航条结束 -->
+			
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" id="top">
+						WRITE UP
+						<div id="gap"></div>
+						<div id="total">
+							<span class="glyphicon glyphicon-list"></span>
+							Total: {{ wp_num }}
+							&nbsp;
+							<span class="pull-right">
+								<button type="button" class="btn btn-primary" id="wp_upload">UPLOAD MY WP!</button>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" id="content2">
+
+						<div class="each">
+                        {% if wp_list.0 != Null %}
+							<div class="title">
+								{{ number1 }}| <a href="/wp_download/{{ wp_list.0.id }}">{{ wp_list.0.title }}</a>
+							</div>
+							<div class="intro">
+                                {{ x }}
+								{{ wp_list.0.introduction }}
+							</div>
+
+							<div class="like">
+                                {% if is_agreed.0 %}
+								    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.0.id }}" style="color: gold"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.0.id }}"></span>
+                                {% endif %}
+								{{ wp_list.0.good }}
+							</div>
+                        {% endif %}
+						</div>
+
+                        <div class="each">
+                            {% if wp_list.1 != Null %}
+							<div class="title">
+								{{ number2 }}| <a href="/wp_download/{{ wp_list.1.id }}">{{ wp_list.1.title }}</a>
+							</div>
+							<div class="intro">
+                                {{ x }}
+								{{ wp_list.1.introduction }}
+							</div>
+							<div class="like">
+								{% if is_agreed.1 %}
+								    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.1.id }}" style="color: gold"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.1.id }}"></span>
+                                {% endif %}
+								{{ wp_list.1.good }}
+							</div>
+                            {% endif %}
+						</div>
+
+                        <div class="each">
+                            {% if wp_list.2 != Null %}
+							<div class="title">
+								{{ number3 }}| <a href="/wp_download/{{ wp_list.2.id }}">{{ wp_list.2.title }}</a>
+							</div>
+							<div class="intro">
+                                {{ x }}
+								{{ wp_list.2.introduction }}
+							</div>
+							<div class="like">
+								{% if is_agreed.2 %}
+								    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.2.id }}" style="color: gold"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-thumbs-up" id="{{ wp_list.2.id }}"></span>
+                                {% endif %}
+								{{ wp_list.2.good }}
+							</div>
+                            {% endif %}
+						</div>
+
+					</div>
+				</div> <!-- 主体部分结束 -->
+			
+				
+			<div class="row">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" id="slide">
+					{% if former != latest %}
+					<nav aria-label="Page navigation"> <!-- 翻页按钮开始 -->
+					  <ul class="pagination">
+					    <li>
+					      <a href="../wp_list/?id={{ pro_id }}&page={{ former }}" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+                          {% for i in page_num_list %}
+					    <li><a href="../wp_list/?id={{ pro_id }}&page={{ i }}">{{i}}</a></li>
+                          {% endfor %}
+					    <li>
+					      <a href="../wp_list/?id={{ pro_id }}&page={{ latest }}" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav> <!-- 翻页按钮 -->
+					{% endif %}
+				</div>
+			</div> 
+			
+		</div>
+	</body>
+</html>

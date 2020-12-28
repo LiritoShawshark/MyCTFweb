@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		
+		<style>
+			body {
+				background: url(../static/images/main_img.jpg);
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+			form {
+				font-size: 15px;
+				font-family: "Italic";
+				padding: 50px;
+				background-color: rgba(0, 0, 0, 0.3);
+				color: whitesmoke;
+				border-radius: 20px;
+			}
+			#header {
+				font-size: 30px;
+				font-family: "Italic";
+				font-weight: bolder;
+				color: whitesmoke;
+				text-shadow: 1px 1px papayawhip;
+				text-align: center;
+			}
+			#message {
+				font-family: "times new roman";
+				text-align: center;
+				font-size: 30px;
+				color: black;
+				display: none;
+			}
+			button {
+				width: 100px;
+				margin-top: -60px;
+			}
+			#tips {
+				color: orange;
+				font-family: "Arial";
+				font-weight: bolder;
+				font-size: 13px;
+			}
+			.form-group {
+				margin-top: 25px;
+			}
+		</style>
+		
+		<script>
+			window.onload = function() {
+				var btn = document.getElementById("btn");
+				var pw1 = document.getElementById("pw1");
+				var pw2 = document.getElementById("pw2");
+				var user = document.getElementById("name");
+				var back = document.getElementById("back");
+				var mess = document.getElementById("message");
+				var sid = document.getElementById("stu_id");
+				
+				function fade() {
+					mess.style.display = "none";
+				}
+				 {% if message %}
+
+					mess.innerHTML = {{ message }};
+                    mess.style.display = "block";
+					setTimeout(fade, 1500);
+
+                  {% endif %}
+
+				function CheckInput() {
+					if (user.value.length < 4) {
+						return "UserName at lease 4 charactors!";
+					}
+					else if (pw1.value.length < 6) {
+						return "Password at lease 6 charactors!";
+					}
+					return '';
+				}
+				
+				btn.onclick = function() {
+					if (user.value == "") {
+						//alert("用户名不能为空！");
+						mess.innerHTML = "UserName Can't Be Null!";
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						user.focus();
+						return false;
+					}
+					else if (pw1.value == "") {
+						//alert("请设置密码！");
+						mess.innerHTML = "Set Your Password PLEASE!";
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						pw1.focus();
+						return false;
+					}
+					else if (pw2.value == "") {
+						//alert("请确认密码！");
+						mess.innerHTML = "Confirm Your password PLEASE!";
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						pw2.focus();
+						return false;
+					}
+					else if (pw1.value != pw2.value) {
+						//alert("两次密码不一致。请再次确认密码！");
+						mess.innerHTML = "The two password MUST be the same!";
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						pw2.focus();
+						pw2.select();
+						return false;
+					}
+					else if (sid.value == "")
+					{
+						mess.innerHTML = "StudentID can't be NULL!";
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						sid.focus();
+						return false;
+					}
+					checkres = CheckInput();
+					if (checkres != '')
+					{
+						mess.innerHTML = checkres;
+						mess.style.display = "block";
+						setTimeout(fade, 1500);
+						return false;
+					}
+					return true;	//return false 不刷新，true 刷新
+				};
+				
+				back.onclick = function() {
+					window.location.href = "../login/";
+				};
+				
+			}
+		</script>
+		
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			
+			<div class="row" style="margin-top: 20px;">
+				
+				<div class="col-md-offset-3 col-sm-offset-3 col-lg-offset-3 col-md-6 col-sm-6 col-lg-6">
+					<p id="header">GL_CTF<br />REGISTER</h1>
+					
+					<form action="/regist/" method="post">
+						{% csrf_token %}
+						<div class="row" style="height: 50px;">
+							<div class="col-md-12 col-sm-12 col-xs-12" id="message">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<lebel for="name">UserName</lebel>
+							<input type="text" name="username" id="name" maxlength="10" placeholder="username" class="form-control" />
+						</div>
+						
+						<div class="form-group">
+							<lebel for="pw1">Password</lebel>
+							<input type="password" name="password1" id="pw1" maxlength="15" placeholder="password" class="form-control"/>
+						</div>
+						
+						<div class="form-group">
+							<lebel for="pw1">Confirm Password</lebel>
+							<input type="password" name="password2" id="pw2" maxlength="15" placeholder="password" class="form-control"/>
+						</div>
+						
+						<div class="form-group">
+							<label for="stu_id">StudentID</label>
+							<input type="number" name="stu_id" id="stu_id" min="2000000000" max="2020999999" placeholder="student id" class="form-control"/>
+						</div>
+						
+						<div class="form-group" style="margin-top: 30px;">
+							<span id="tips">
+								·UserName at least 4 charactors.<br />
+								·UserName should only contains number/letters.<br />
+								·Password at least 6 charactors.<br />
+								·Student ID is used for look back your password.
+							</span>
+							<button type="submit" name="submit" id="btn" class="btn btn-success pull-right">Submit</button>
+						</div>
+						
+						<div class="form-group" style="margin-top: 30px">
+							<button type="button" id="back" class="btn btn-primary pull-right">LogIn</button>
+						</div>
+					</form>
+					
+				</div> 
+				
+			</div>
+            {% if message %}
+				<script type="text/javascript">
+					alert("{{message}}");
+				</script>
+            {% endif %}
+
+
+		</div>
+
+	</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Team</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			body {
+				background: url(../static/images/no_team.jpg);
+				background-size: cover;
+			}
+            #bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+            .hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			#sentence {
+				font-family: "CommercialScript BT";
+				font-size: 50px;
+				color: orange;
+				text-align: center;
+				vertical-align: middle;
+				margin-top: 3%;
+			}
+			#main_block {
+				font-family: "Italic";
+				font-size: 50px;
+				color: white;
+				margin-top: 3%;
+			}
+			.join {
+				font-size: 20px;
+			}
+			.join:hover {
+				cursor: pointer;
+				color: gold;
+			}
+			#create_button {
+				text-align: center;
+				font-family: "Italic";
+				font-size: 50px;
+				color: white;
+			}
+			#create_input {
+				font-family: "Italic";
+				font-size: 10px;
+				color: black;
+				padding-top: 30px;
+			}
+            #logo {
+				font-family: "Calibri (正文)";
+				font-size: 30px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+
+		</style>
+		
+		<script>
+
+			var clickExpression = function(arg)
+			{
+				return function() {
+					var xmlhttp;
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function()
+					{
+						if (xmlhttp.readyState===4 && xmlhttp.status===200)
+						{
+							alert(xmlhttp.responseText);
+							window.location.href = "/"
+						}
+					};
+					xmlhttp.open("GET", "/teamJoin/"+"?id="+arg, true);
+					xmlhttp.send();
+				}
+			};
+			window.onload = function() {
+				var tds = document.getElementsByTagName("td");
+				var x;
+				var problems = document.getElementById("problems");
+                var teams = document.getElementById("teams");
+                var rank = document.getElementById("rank");
+                var login = document.getElementById("login");
+                var register = document.getElementById("register");
+				var rec = new Array();
+				problems.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+                        };
+                        problems.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+                        };
+
+						rank.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						rank.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+
+						teams.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						teams.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+
+						login.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						login.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+
+						register.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+						};
+						register.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+						};
+
+						<!-- 导航栏按钮 -->
+						problems.onclick = function() {
+							window.location.href = "/problems/"
+						};
+						rank.onclick = function() {
+					        window.location.href = "../rank/?type=1&page=1"
+				        };
+
+						teams.onclick = function() {
+						        window.location.href = "/team/"
+						};
+
+						login.onclick = function() {
+                            {% if login_name %}
+                                window.location.href = '/logout/';
+                            {% else %}
+                                window.location.href = "/login/";
+                            {% endif %}
+                        };
+                        register.onclick = function() {
+                            {% if login_name %}
+                                window.location.href = '/info/?id={{ user.id }}';
+                            {% else %}
+                                window.location.href = "/regist/";
+                            {% endif %}
+                        };
+				for (x = 0; x < tds.length; x++)
+				{
+					if (tds[x].className === "join")
+					{
+						tds[x].onclick = clickExpression(tds[x].id);
+					}
+				}
+				document.getElementById("logo").onclick = function() {
+                    window.location.href = "/"
+                }
+				
+			}
+		</script>
+		
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+            <!-- 导航条 -->
+				<div id="bar" class="row">
+                    <div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Teams
+						</span>
+					</div>
+
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div>
+			<!-- 导航条结束 -->
+			<div class="row" id="sentence">
+				<div class="col-md-10 col-sm-10 col-lg-10 col-md-offset-1 col-lg-offset-1 col-sm-offset-1">
+					But remember this:You have friends here.You are not alone.
+				</div>
+			</div>
+			<div class="row" id="main_block">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10">
+					<table class="table">
+						<tr>
+							<td>#</td>
+							<td>TeamName</td>
+							<td>Leader</td>
+							<td>member</td>
+							<td></td>
+						</tr>
+                        {% for team in team_list %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ team.team_name }}</td>
+							<td>{{ team.leader }}</td>
+							<td>{{ team.member_num }} / 5</td>
+							<td class="join" id="{{team.id}}">
+								<span class="glyphicon glyphicon-send"></span>
+								Join
+							</td>
+						</tr>
+                        {% endfor %}
+						
+					</table>
+				</div> 
+			</div><!-- 榜单结束 -->
+			
+			<div class="row" style="margin-top: 20%;">
+				<div class="col-md-12 col-lg-12 col-sm-12" id="create_button">
+					<button class="btn btn-lg btn-success" data-target="#myModal" data-toggle="modal">
+						CREATE A TEAM
+					</button>
+				</div>
+			</div>
+			
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 显示队伍成员 -->
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h2 class="modal-title" id="myModalLabel" style="text-align: center; font-family: Italic">Create A Team</h2>
+				  </div>
+				  <div class="modal-body">
+					  
+					  <form action="/teamCreate/" id="create_input" method="post">
+						  <div class="form-group">
+							  <label>Team Name</label>
+							  <input type="text" class="form-control" name="team_name" placeholder="Team Name" maxlength="10" />
+						  </div>
+						  
+						  <div class="form-group">
+							  <label>Team Motto</label>
+							  <textarea class="form-control" rows="4" placeholder="Team Motto" name="motto"></textarea>
+						  </div>
+						  
+						  
+						  <div class="form-group" style="text-align: center;">
+							  <button class="form-control btn btn-primary btn-lg" type="submit" style="width: 30%;">
+								  Submit
+							  </button>
+							  {% csrf_token %}
+						  </div>
+					  </form>
+					  
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			  </div>
+			</div> <!-- 模态框结束 -->
+			
+		</div>
+	</body>
+</html>

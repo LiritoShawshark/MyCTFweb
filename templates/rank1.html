@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Rank</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			#header {
+				border-bottom: 10px double blanchedalmond;
+				font-family: "CommercialScript BT";
+				font-size: 40px;
+				text-align: center;
+				margin: 10px;
+			}
+			.table {
+				font-size: 40px;
+				font-family: "times new roman";
+			}
+			#bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+			#logo {
+				font-family: "Calibri (正文)";
+				font-size: 32px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+			.hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			body {
+				background: lightgray;
+			}
+			#p_t {
+				margin-bottom: 2%;
+				font-family: "Italic";
+				font-size: 20px;
+				color: black;
+				font-weight: bolder;
+			}
+			#p{
+				border-right: 2px solid gold;
+			}
+			#p:hover {
+				cursor: pointer;
+				color: gold;
+			}
+			#t:hover {
+				cursor: pointer;
+				color: gold;
+			}
+			.active {
+				color: orange;
+			}
+			#slide {
+				text-align: center;
+				font-family: "CommercialScript BT";
+				font-size: 20px;
+			}
+            a{
+                text-decoration: none;
+            }
+            a:hover {
+                text-decoration: none;
+            }
+            a:visited {
+                text-decoration: none;
+            }
+            a:active {
+                text-decoration: none;
+            }
+		</style>
+		
+		<script>
+			window.onload = function() {
+				var problems = document.getElementById("problems");
+				var teams = document.getElementById("teams");
+				var rank = document.getElementById("rank");
+				var login = document.getElementById("login");
+				var register = document.getElementById("register");
+				var p = document.getElementById("p");
+				var t = document.getElementById("t");
+				
+				problems.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				problems.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				rank.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				rank.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				teams.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				teams.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				login.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				login.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				register.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				register.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				<!-- 导航栏按钮 -->
+				problems.onclick = function() {
+					window.location.href = "/problems/"
+				};
+				rank.onclick = function() {
+					window.location.href = "/rank/?type=1&page=1"
+				};
+				teams.onclick = function() {
+					window.location.href = "/team/"
+				};
+				login.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/logout/'
+                    {% else %}
+				        window.location.href = "/login/"
+                    {% endif %}
+				};
+				register.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/info/?id={{ user.id }}'
+                    {% else %}
+				        window.location.href = "/regist/"
+                    {% endif %}
+				};
+				 document.getElementById("logo").onclick = function() {
+                    window.location.href = "/"
+                }
+				
+				p.onclick = function() {
+					window.location.href = "../rank/?type=1&page=1";
+				}
+				t.onclick = function() {
+					window.location.href = "../rank/?type=2&page=1";
+				}
+			}
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			
+			<!-- 导航条 -->
+				<div id="bar" class="row"> 
+					<div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+					
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+					
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Teams
+						</span>
+					</div>
+					
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div> 
+			<!-- 导航条结束 -->
+			
+			<div class="row" id="p_t">
+                {% if rank_type == 1 %}
+				<div class="col-md-6 col-lg-6 col-sm-6 active" style="text-align: right;" id="p">
+					Personal List
+				</div>
+				<div class="col-md-6 col-sm-6 col-lg-6" id="t">
+					Team List
+				</div>
+                {% else %}
+                <div class="col-md-6 col-lg-6 col-sm-6" style="text-align: right;" id="p">
+					Personal List
+				</div>
+				<div class="col-md-6 col-sm-6 col-lg-6 active" id="t">
+					Team List
+				</div>
+                {% endif %}
+			</div>
+			{% if rank_type == 1 %}
+			<div class="row" style="background-color: lightgray;">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" style="background-color: ghostwhite;">
+					
+					<div id="header">
+						Personal Rank
+					</div>
+					
+					<table class="table table-striped">
+						<tr>
+							<td>Rank</td>
+							<td>User</td>
+							<td>Score</td>
+							<td>Solve</td>
+							<td>Team</td>
+						</tr>
+                            {% if rank_list.0 != None %}
+						<tr>
+							<td>{{ page1 }}</td>
+							<td><a href="../info/?id={{ rank_list.0.id }}">{{ rank_list.0.username }}</a></td>
+							<td>{{ rank_list.0.scores }}</td>
+							<td>{{ rank_list.0.answers }}</td>
+                            {% if user.team != None %}
+							    <td>{{ rank_list.0.team.team_name }}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+						</tr>
+                            {% endif %}
+
+                            {% if rank_list.1 != None %}
+                                <tr>
+                                <td>{{ page2 }}</td>
+                                <td><a href="../info/?id={{ rank_list.1.id }}">{{ rank_list.1.username }}</a></td>
+                                <td>{{ rank_list.1.scores }}</td>
+                                <td>{{ rank_list.1.answers }}</td>
+                                {% if rank_list.1.team != None %}
+                                    <td>{{ rank_list.1.team.team_name }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                </tr>
+                            {% endif %}
+
+							{% if rank_list.2 != None %}
+                                <tr>
+                                <td>{{ page3 }}</td>
+                                <td><a href="../info/?id={{ rank_list.2.id }}">{{ rank_list.2.username }}</a></td>
+                                <td>{{ rank_list.2.scores }}</td>
+                                <td>{{ rank_list.2.answers }}</td>
+                                {% if rank_list.2.team != None %}
+                                    <td>{{ rank_list.2.team.team_name }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                </tr>
+                            {% endif %}
+
+
+							{% if rank_list.3 != None %}
+                                <tr>
+                                <td>{{ page4 }}</td>
+                                <td><a href="../info/?id={{ rank_list.3.id }}">{{ rank_list.3.username }}</a></td>
+                                <td>{{ rank_list.3.scores }}</td>
+                                <td>{{ rank_list.3.answers }}</td>
+                                {% if rank_list.3.team != None %}
+                                    <td>{{ rank_list.3.team.team_name }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                </tr>
+                            {% endif %}
+
+
+							{% if rank_list.4 != None %}
+                                <tr>
+                                <td>{{ page5 }}</td>
+                                <td><a href="../info/?id={{ rank_list.4.id }}">{{ rank_list.4.username }}</a></td>
+                                <td>{{ rank_list.4.scores }}</td>
+                                <td>{{ rank_list.4.answers }}</td>
+                                {% if rank_list.4.team != None %}
+                                    <td>{{ rank_list.4.team.team_name }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                                </tr>
+                            {% endif %}
+
+					</table>
+				</div>
+			</div> <!-- 个人榜单结束 -->
+			
+			<div class="row">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" id="slide">
+					{% if rank_list.0 != None %}
+					<nav aria-label="Page navigation"> <!-- 翻页按钮开始 -->
+					  <ul class="pagination">
+					    <li>
+					      <a href="../rank/?type={{ rank_type }}&page={{ front }}" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+                          {% for i in rank_pages_list %}
+					    <li><a href="../rank/?type={{ rank_type }}&page={{ i }}">{{ i }}</a></li>
+                          {% endfor %}
+					    <li>
+					      <a href="../rank/?type={{ rank_type }}&page={{ behind }}" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav> <!-- 翻页按钮 -->
+					{% endif %}
+				</div>
+			</div>
+        {% elif rank_type == 2 %}
+
+			<div class="row" style="background-color: lightgray; margin-top: 2%;">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" style="background-color: floralwhite;">
+					
+					<div id="header">
+						Team Rank
+					</div>
+					
+					<table class="table table-striped">
+						<tr>
+							<td>Rank</td>
+							<td>Team</td>
+							<td>Leader</td>
+							<td>Score</td>
+							<td>Member</td>
+						</tr>
+                        {% if rank_list.0 != None %}
+						<tr>
+							<td>{{ page1 }}</td>
+							<td>{{ rank_list.0.team_name }}</td>
+							<td>{{ rank_list.0.leader }}</td>
+							<td>{{ rank_list.0.scores }}</td>
+							<td>{{ rank_list.0.member_num }}</td>
+						</tr>
+                        {% endif %}
+                        {% if rank_list.1 != None %}
+						<tr>
+							<td>{{ page2 }}</td>
+							<td>{{ rank_list.1.team_name }}</td>
+							<td>{{ rank_list.1.leader }}</td>
+							<td>{{ rank_list.1.scores }}</td>
+							<td>{{ rank_list.1.member_num }}</td>
+						</tr>
+                        {% endif %}
+						{% if rank_list.2 != None %}
+						<tr>
+							<td>{{ page3 }}</td>
+							<td>{{ rank_list.2.team_name }}</td>
+							<td>{{ rank_list.2.leader }}</td>
+							<td>{{ rank_list.2.scores }}</td>
+							<td>{{ rank_list.2.member_num }}</td>
+						</tr>
+                        {% endif %}
+						{% if rank_list.3 != None %}
+						<tr>
+							<td>{{ page4 }}</td>
+							<td>{{ rank_list.3.team_name }}</td>
+							<td>{{ rank_list.3.leader }}</td>
+							<td>{{ rank_list.3.scores }}</td>
+							<td>{{ rank_list.3.member_num }}</td>
+						</tr>
+                        {% endif %}
+                        {% if rank_list.4 != None %}
+						<tr>
+							<td>{{ page5 }}</td>
+							<td>{{ rank_list.4.team_name }}</td>
+							<td>{{ rank_list.4.leader }}</td>
+							<td>{{ rank_list.4.scores }}</td>
+							<td>{{ rank_list.4.member_num }}</td>
+						</tr>
+                        {% endif %}
+					</table>
+				</div>
+			</div> <!-- 战队榜单结束 -->
+                <div class="row">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" id="slide">
+                    {% if rank_list.0 != None %}
+					<nav aria-label="Page navigation"> <!-- 翻页按钮开始 -->
+					  <ul class="pagination">
+					    <li>
+					      <a href="../rank/?type={{ rank_type }}&page={{ front }}" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					      </a>
+					    </li>
+                          {% for i in rank_pages_list %}
+					    <li><a href="../rank/?type={{ rank_type }}&page={{ i }}">{{ i }}</a></li>
+                          {% endfor %}
+					    <li>
+					      <a href="../rank/?type={{ rank_type }}&page={{ behind }}" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav> <!-- 翻页按钮 -->
+                    {% endif %}
+				</div>
+			</div>
+        {% endif %}
+
+		</div>
+	</body>
+</html>

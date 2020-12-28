@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>{{ user.username }}</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<script src="http://cdn.highcharts.com.cn/highstock/highstock.js"></script>
+		
+		
+		<style>
+			body {
+				background-image: url(../static/images/personal.jpg);
+				background-size: 100%;
+			}
+			#bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+			.hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			#user_block {
+				border-right: 3px solid gold;
+				border-image: linear-gradient(to bottom, white, deepskyblue, white) 10 10;
+				height: 500px;
+				font-size: 70px;
+				font-family: "Italic";
+				color: white;
+				text-align: center;
+			}
+			#username {
+				border-bottom: 1px solid mediumpurple;
+			}
+			#intro {
+				background-color: rgba(255, 255, 255, 0.1);
+				font-size: 40px;
+				text-align: left;
+				height: 400px;
+				padding: 30px;
+			}
+			#welcome {
+				border: 3px ridge deepskyblue;
+				border-radius: 10px;
+				border-top: none;
+				border-right: none;
+				border-left-color: white;
+				font-family: "CommercialScript BT";
+				font-size: 50px;
+				color: ghostwhite;
+				text-align: center;
+			}
+			#container {
+				height: 400px;
+				margin-top: 30px;
+				border: 2px solid purple;
+				border-radius: 20px;
+				background-color: rgba(255, 255, 255, 0.6);
+				padding: 8px;
+			}
+			#score, #team {
+				height: 100px;
+				font-family: "Italic";
+				font-size: 30px;
+				padding: 8px;
+				text-align: center;
+				color: ghostwhite;
+				background-color: rgba(255, 255, 255, 0.1);
+				border: 3px double mediumpurple;
+				border-radius: 10px;
+			}
+			#down {
+				margin-top: 4%;
+			}
+            #logo {
+				font-family: "Calibri (正文)";
+				font-size: 30px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+			.change {
+				font-size: 20px;
+			}
+			.change:hover {
+				color: gold;
+				cursor: pointer;
+			}
+			.modal-title {
+				font-family: "times new roman";
+				text-align: center;
+				font-size: 30px;
+			}
+		</style>
+		
+		<script>
+			window.onload = function()
+			{
+				var problems = document.getElementById("problems");
+				var teams = document.getElementById("teams");
+				var rank = document.getElementById("rank");
+				var login = document.getElementById("login");
+				var register = document.getElementById("register");
+				var welcome = document.getElementById("welcome");
+				var date = new Date();
+				var year = date.getFullYear();
+				var month = date.getMonth() + 1;
+				var day = date.getDate();
+				
+				problems.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+                };
+                problems.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+                };
+				
+				rank.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				rank.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				teams.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				teams.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				login.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				login.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				register.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				register.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				<!-- 导航栏按钮 -->
+				problems.onclick = function() {
+					window.location.href = "/problems/"
+				};
+				rank.onclick = function() {
+					window.location.href = "../rank/?type=1&page=1"
+				};
+				teams.onclick = function() {
+					window.location.href = "/team/"
+				};
+				login.onclick = function() {
+                    {% if login_name %}
+                        window.location.href = '/logout/'
+                    {% else %}
+				        window.location.href = "/login/"
+                    {% endif %}
+				};
+				register.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/info/?id={{ me.id }}'
+                    {% else %}
+				        window.location.href = "/regist/"
+                    {% endif %}
+				};
+				
+				welcome.innerHTML = "{{ user.c_time|date:'Y-m-d'}}"+ "~" + year + "-" + month + "-" + day;
+				document.getElementById("logo").onclick = function() {
+                    window.location.href = "/"
+                }
+			}
+		</script>
+		
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<!-- 导航条 -->
+				<div id="bar" class="row">
+                    <div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+					
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+					
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Team
+						</span>
+					</div>
+					
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div> 
+			<!-- 导航条结束 -->
+			
+			<div class="row">
+				<div class="col-md-5 col-lg-5 col-sm-5" id="user_block"> <!-- 左侧部分：ID + 简介 -->
+					<div id="username">
+						{{ user.username }}
+						<button data-toggle="modal" data-target="#myModal1" style="background: none; border: none;">
+							<span class="change">
+                                {% if user.username == me.username %}
+								<span class="glyphicon glyphicon-pencil"></span>
+                                {% endif %}
+							</span>
+						</button>
+					</div>
+					
+					<div id="intro">
+						Motto:<br />
+						{{ user.motto }}
+						<button data-toggle="modal" data-target="#myModal2" style="background: none; border: none;">
+							<span class="change">
+                                {% if user.username == me.username %}
+								<span class="glyphicon glyphicon-pencil"></span>
+                                {% endif %}
+
+							</span>
+						</button>
+					</div>
+				</div>
+				
+				<div class="col-md-5 col-lg-5 col-sm-5 pull-right" id="welcome"> <!-- 右侧上方：welcome -->
+				</div>
+				
+				<div class="col-md-5 col-lg-5 col-sm-5 pull-right" id="container"> <!-- 右侧下方：图表 -->
+					<script>
+					       // 图表配置
+					    var options = {
+					       /* chart: {
+								type: 'bar'
+					        }, */
+					        title: {
+					            text: 'MY PROBLEMS'                 // 标题
+				            },
+				            xAxis: {
+				                categories: ['WEB', 'PWN', 'MISC', 'CRYPTO', 'REVERSE']   // x 轴分类
+				            },
+				            yAxis: {
+								title: {
+					                text: 'SOLVED'                // y 轴标题
+					            }
+					        },
+							series: [{                              // 数据列
+					            name: 'Mine',                        // 数据列名
+					            data: [{{ user.web }}, {{user.pwn}}, {{ user.misc }}, {{user.crypto}}, {{user.reverse}}]                     // 数据
+							}, {
+					            name: 'TOTAL',
+					            data: [{{ web }}, {{ pwn }}, {{ misc }}, {{ crypto }}, {{ reverse }}]
+				            }],
+							chart: {
+								type: 'bar',
+								
+								 backgroundColor: {
+					                linearGradient: [0, 0, 500, 500],
+						            stops: [
+										[0, 'rgb(255, 255, 255)'],
+					                    [1, 'rgb(200, 200, 255)']
+					                ]
+								},
+								
+								borderRadius: '20px',
+								
+								inverted: true,
+								
+							    style: {
+							        fontFamily: "Italic",
+							        fontSize: '12px',
+							        fontWeight: 'bold',
+							    }
+							}
+				        };
+				        // 图表初始化函数
+				        var chart = Highcharts.chart('container', options);
+				    </script>
+				</div> <!-- 图表结束 -->
+				
+			</div> <!-- 主体部分结束 -->
+			
+			<div class="row" id="down">
+				<div id="score" class="col-md-3 col-lg-3 col-sm-3 col-lg-offset-2 col-md-offset-2 col-sm-offset-2">
+					<span class="glyphicon glyphicon-flag"></span>
+					SCORE: {{user.scores}}
+				</div> 
+				
+				<div id="team" class="col-md-3 col-lg-3 col-sm-3 col-lg-push-2 col-md-push-2 col-sm-push-2">
+					<span class="glyphicon glyphicon-fire"></span>
+					{% if user.team != None %}
+                        TEAM: {{ user.team.team_name }}
+                    {% else %}
+                        {% if is_myself %}
+                            You have no team.
+                        {% else %}
+                            This user has no team.
+                        {% endif %}
+                    {% endif %}
+				</div>
+			</div>
+			{% if is_myself %}
+			<!-- 修改用户名 -->
+			<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 改名字 -->
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h2 class="modal-title" id="myModalLabel">Change Your UserName</h2>
+				  </div>
+				  <div class="modal-body">
+					  
+					  <form action="/name_rewrite/" method="post">
+					  	<div class="form-group">
+							<label>New Name</label>
+							<input type="text" maxlength="10" placeholder="New Name" class="form-control" name="newname"/>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-success" type="submit">
+								Submit
+							</button>
+							{% csrf_token %}
+						</div>
+					  </form>
+					  
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			  </div>
+			</div> <!-- 模态框结束 -->
+			
+			<!-- 修改简介 -->
+			<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 显示队伍成员 -->
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h2 class="modal-title" id="myModalLabel">Change Your Motto</h2>
+				  </div>
+				  <div class="modal-body">
+					  
+					  <form action="/motto_rewrite/" method="post">
+					  	<div class="form-group">
+							<label>New Motto</label>
+							<textarea placeholder="New Motto" class="form-control" name="newmotto" rows="5"></textarea>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-success" type="submit">
+								Submit
+							</button>
+							{% csrf_token %}
+						</div>
+					  </form>
+					  
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				  </div>
+				</div>
+			  </div>
+			</div> <!-- 模态框结束 -->
+			{% endif %}
+		</div>
+	</body>
+</html>

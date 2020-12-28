@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户需知</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style type="text/css">
+			#title {
+				font-size: 50px;
+				font-family: "楷体";
+				text-align: center;
+			}
+			#hello {
+				font-size: 40px;
+				font-family: "楷体";
+			}
+			#text {
+				text-indent: 2em;
+				font-size: 30px;
+				font-family: "楷体";
+				color: dimgray;
+			}
+			#img {
+				text-align: center;
+			}
+			#img_content {
+				height: 600px;
+				width: 1000px;
+			}
+			.getout:hover {
+				cursor: pointer;
+				text-shadow: 1px 1px gray;
+			}
+			#btn {
+				font-size: 20px;
+				font-family: "楷体";
+			}
+		</style>
+		
+		<script>
+			window.onload = function()
+			{
+				function HOME()
+				{
+					window.location.href = "/";
+				}
+				var out = document.getElementsByClassName("getout");
+				var x;
+				for (x = 0; x < out.length; x++)
+				{
+					out[x].onclick = HOME;
+				}
+			};
+			
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-lg-12" id="title">
+					用户需知
+					<span class="pull-right getout">&times;</span>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-lg-12" id="hello">
+					尊敬的用户：
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-lg-12" id="text">
+					<p>
+						您所看到的可能是本站唯一一个中文界面。
+					</p>
+					<p>
+						本站的前端开发者（即笔者）是菜鸟中的菜鸟，因此，写下这份文档以引导您获得一个比较好的网站使用体验。以下有几点需知。
+					</p>
+					<p>
+						·本站目前只有英文模式，这主要是因为中文文字使得一些界面看起来特别不和谐。
+					</p>
+					<p>
+						·本站的英文用词并不规范，这主要是因为那个菜鸡前端的英文并不是很好。
+					</p>
+					<p style="font-weight: bolder; color: black;">
+						·浏览本站的所有页面时，请注意您的浏览器缩放比例，这主要是因为有部分页面不具备自适应功能。
+						如果您发现某个页面非常丑，或者某些应有的部件缺失了，请首先在浏览器上进行缩放，以恢复它原本的面貌。
+					</p>
+					<p>
+						以上。
+					</p>
+					<p>
+						如果您仍然遇到一些问题，或者对网站的界面有什么建议，请联系 1092417672@qq.com 或者 1017215275@qq.com。
+						我们对您使用过程中遇到的一切不快表示真诚的歉意。
+					</p>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12 col-lg-12 col-sm-12">
+					<button type="button" class="btn getout pull-right" id="btn">关闭</button>
+				</div>
+			</div>
+			
+		</div>
+	</body>
+</html>

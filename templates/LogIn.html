@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>LogIn</title>
+        <link rel="icon" href="../static/images/tag.png" sizes="32x32">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			
+			.border {
+				border: 2px solid gray;
+				margin-left: 200px;
+				width: 800px;
+				height: 400px;
+				background-color: rgba(255,255,255,0.5);
+				border-radius: 10px;
+			}
+			
+		</style>
+		
+		<script>
+			window.onload = function() {
+				var user=document.getElementById("user");
+				var pw=document.getElementById("pw");
+				var btn=document.getElementById("btn");
+				var register = document.getElementById("register");
+				var back = document.getElementById("back_home");
+				var backimg = document.getElementById("imagine");
+				var t = new Date();
+				var minute = t.getSeconds();
+				
+				btn.onclick = function() {
+					if(user.value == "" && pw.value == "") {
+						alert("用户名和密码不能为空！");
+					}
+					else if (user.value == "") {
+						alert("用户名不能为空！");
+					}
+					else if (pw.value == "") {
+						alert("密码不能为空！");
+					}
+				};
+				
+				if (minute % 4 == 0)
+				{
+					backimg.style.cssText = "background-image: url(../static/images/LogIn2.jpg); background-size: 100%; background-repeat: no-repeat;";
+				}
+				else if (minute % 4 == 1)
+				{
+					backimg.style.cssText = "background-image: url(../static/images/LogIn3.jpg); background-size: 100%; background-repeat: no-repeat;";
+				}
+				else if (minute % 4 == 2)
+				{
+					backimg.style.cssText = "background-image: url(../static/images/LogIn4.jpg); background-size: 100%; background-repeat: no-repeat;";
+				}
+				else if (minute % 4 == 3)
+				{
+					backimg.style.cssText = "background-image: url(../static/images/LogIn5.jpg); background-size: 100%; background-repeat: no-repeat;";
+				}
+				
+				register.onclick = function() {
+					window.location.href = "/regist/";
+					window.event.returnValue = false;
+				};
+				
+				back.onclick = function() {
+					window.location.href = "/";
+					window.event.returnValue = false;
+				};
+				
+				
+				
+			}
+		</script>
+		
+	</head>
+	
+	<body  id="imagine">
+		<div class="container">
+			
+			<div class="row" style="height: 200px;">
+				<div class="col-md-12 col-sm-12 col-xs-12"></div>
+			</div>
+			
+			<div class="row">
+				
+					
+					<form class="form-horizontal col-md-offset-3 col-sm-offset-3 col-xs-offset-3" id="login" method="post" action="/login/">
+						
+						<h1 class="form-title center-block" style="font-size: 40px; color: #DFF0D8;">Log In to Your Account</h1>
+						<br />
+						<br />
+						<div class="col-md-9 col-sm-9 col-xs-9">
+							
+							<div class="form-group">
+								<label style="font-family: arial; font-size: 20px; color: #DFF0D8;">User</label>
+								<input id="user" class="form-control input-lg" type="text" placeholder="UserName" name="username"/>
+							</div>
+							
+							<div class="form-group">
+								<label style="font-family: arial rounded mt bold; font-size: 20px; color: #DFF0D8;">Password</label>
+								<input id="pw" class="form-control input-lg" type="password" placeholder="Password" name="password"/>
+							</div>
+							
+							<br />
+							<br />
+							
+							<div class="form-group">
+								<button id="btn" type="submit" class="btn btn-primary btn-lg col-md-offset-8" value="Submit" style="width: 90px;">Submit</button>
+								<button id = "register" type="button" class="btn btn-warning btn-lg pull-right" value="register" style="width: 100px;"> Register</button>
+								{%csrf_token%}
+							</div>
+							
+							<div class="form-group">
+								<button id = "back_home" class="btn btn-success btn-lg pull-right" value="home" style="width: 220px">Back To Home</button>
+							</div>
+						</div>
+						
+					</form>
+
+			</div>
+
+            {% if message %}
+				<script type="text/javascript">
+					alert("{{message}}");
+				</script>
+            {% endif %}
+
+		</div>
+	</body>
+</html>

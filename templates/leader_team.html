@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Teams</title>
+        <link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+		<style>
+			body {
+				background-image: url(../static/images/team.jpg);
+				background-size: cover;
+				background-repeat: no-repeat;
+
+			}
+			#left_block {
+				border: 2px solid ghostwhite;
+				border-left: none;
+				border-radius: 10px;
+				margin-top: 7%;
+				height: 600px;
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+			#right_block {
+				border: 2px solid ghostwhite;
+				border-right: none;
+				border-radius: 10px;
+				margin-top: 7%;
+				height: 600px;
+				background-color: rgba(0, 0, 0, 0.5);
+			}
+			#teamname {
+				font-family: "Italic";
+				font-size: 50px;
+				color: ghostwhite;
+				text-align: center;
+			}
+			#rename {
+				font-size: 30px;
+				color: lightgray;
+			}
+			#leader {
+				font-family: "Italic";
+				font-size: 30px;
+				color: ghostwhite;
+				text-align: right;
+				padding-bottom: 30px;
+				border-bottom: 3px solid black;
+				border-image: -webkit-linear-gradient(to right, black, ghostwhite, black) 30 30;
+				border-image: -moz-linear-gradient(to right, black, ghostwhite, black) 30 30;
+				border-image: linear-gradient(to right, black, ghostwhite, black) 30 30;
+			}
+			#member {
+				font-family: "Italic";
+				font-size: 25px;
+				color: ghostwhite;
+				text-align: left;
+				padding-top: 30px;
+				padding-left: 10px ;
+			}
+			#solved {
+				font-family: "Italic";
+				font-size: 25px;
+				color: ghostwhite;
+				text-align: left;
+				padding-top: 30px;
+				padding-left: 10px ;
+			}
+			#rank {
+				font-family: "Italic";
+				font-size: 25px;
+				color: ghostwhite;
+				text-align: left;
+				padding-top: 30px;
+				padding-left: 10px ;
+				padding-bottom: 30px;
+				border-bottom: 3px solid black;
+				border-image: -webkit-linear-gradient(to right, black, ghostwhite, black) 30 30;
+				border-image: -moz-linear-gradient(to right, black, ghostwhite, black) 30 30;
+				border-image: linear-gradient(to right, black, ghostwhite, black) 30 30;
+			}
+			#motto {
+				font-family: "Italic";
+				font-size: 25px;
+				color: ghostwhite;
+				text-align: left;
+				padding-top: 30px;
+				padding-left: 10px ;
+			}
+			#reweite {
+				font-size: 30px;
+				color: lightgray;
+				text-align: right;
+			}
+			#tuli {
+				margin-top: 5%;
+			}
+			#web, #misc, #pwn, #crypto, #reverse {
+				padding: 50px;
+				font-family: "times new roman";
+				font-size: 30px;
+				color: ghostwhite;
+			}
+			#web_jindu, #misc_jindu, #pwn_jindu, #reverse_jindu, #crypto_jindu {
+				margin: 90px;
+				font-family: "Italic";
+			}
+
+			.normal {
+				margin-top: 100px;
+				font-family: "Italic";
+				font-size: 27px;
+				color: white;
+			}
+			.hover {
+				margin-top: 100px;
+				font-family: "Italic";
+				font-size: 28px;
+				color: gold;
+				cursor: pointer;
+			}
+			#modal_member {
+				font-family: "times new roman";
+				font-size: 30px;
+				text-align: center;
+				color: gray;
+			}
+            #apply {
+				font-size: 20px;
+				font-family: "Italic";
+			}
+			.Agree {
+				font-size: 16px;
+				color: green;
+			}
+			.Deny {
+				font-size: 16px;
+				color: red;
+			}
+			.Agree:hover {
+				cursor: pointer;
+				border-bottom: 1px solid greenyellow;
+			}
+			.Deny:hover {
+				cursor: pointer;
+				border-bottom: 1px solid red;
+			}
+            .kick {
+                cursor: pointer;
+            }
+		</style>
+
+		<script>
+
+
+			window.onload = function() {
+                var clickExpress = function(arg) {
+				    return function() {
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function()
+					{
+						if (xmlhttp.readyState===4 && xmlhttp.status===200)
+						{
+							alert(xmlhttp.responseText);
+							window.location.href = "/team/"
+						}
+					};
+					xmlhttp.open("GET", "../kick/?kick="+arg, true);
+					xmlhttp.send();
+				}
+			    };
+                var click_Agree = function(arg) {
+				return function() {
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function()
+					{
+						if (xmlhttp.readyState===4 && xmlhttp.status===200)
+						{
+							alert(xmlhttp.responseText);
+							window.location.href = "/team/"
+						}
+					};
+					xmlhttp.open("GET", "/agree/?agree="+arg, true);
+					xmlhttp.send();
+				}
+			};
+			var click_Deny = function(arg) {
+				return function() {
+					xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange=function()
+					{
+						if (xmlhttp.readyState===4 && xmlhttp.status===200)
+						{
+							alert(xmlhttp.responseText);
+							window.location.href = "/team/"
+						}
+					};
+					xmlhttp.open("GET", "/deny/?deny="+arg, true);
+					xmlhttp.send();
+
+				}
+			};
+
+				var h = document.getElementById("home");
+				var m = document.getElementById("member_list");
+				var q = document.getElementById("quit");
+				var tds = document.getElementsByTagName("td");
+				var rename = document.getElementById("rename");
+				var rewrite = document.getElementById("rewrite");
+				var web_bar = document.getElementById("web_bar");
+				var misc_bar = document.getElementById("misc_bar");
+				var pwn_bar = document.getElementById("pwn_bar");
+				var crypto_bar = document.getElementById("crypto_bar");
+				var reverse_bar = document.getElementById("reverse_bar");
+                var quit = document.getElementById("quit");
+
+
+                var web_jindu_width;
+                var misc_jindu_width;
+                var pwn_jindu_width;
+                var crypto_jindu_width;
+                var reverse_jindu_width;
+
+                var list = new Array();
+                var x;
+                for (x = 0; x < 101; x++)
+                {
+                    list[x] = x + "%";
+                }
+
+				h.onmouseover = function() {
+					h.className = "hover";
+				};
+				h.onmouseleave = function() {
+					h.className = "normal";
+				};
+				h.onclick = function() {
+					window.location.href = "/"
+				};
+
+				m.onmouseover = function() {
+					m.className = "hover";
+				};
+				m.onmouseleave = function() {
+					m.className = "normal";
+				};
+
+				q.onmouseover = function() {
+					q.className = "hover";
+				};
+				q.onmouseleave = function() {
+					q.className = "normal";
+				};
+
+				document.getElementById("application").onmouseover = function() {
+				    document.getElementById("application").className = "hover";
+                };
+				document.getElementById("application").onmouseleave = function () {
+                    document.getElementById("application").className = "normal";
+                };
+
+                for (x = 0; x < tds.length; x++)
+				{
+					if (tds[x].className === "kick")
+					{
+						tds[x].onclick = clickExpress(tds[x - 2].innerHTML);
+					}
+					if (tds[x].className === "Agree")
+					{
+						tds[x].onclick = click_Agree(tds[x - 2].innerHTML);
+					}
+					if (tds[x].className === "Deny")
+					{
+						tds[x].onclick = click_Deny(tds[x - 3].innerHTML);
+					}
+				}
+
+				rename.onmouseover = function() {
+					rename.style.color = "white";
+					rename.style.cursor = "pointer";
+				};
+				rename.onmouseleave = function() {
+					rename.style.color = "lightgray";
+					rename.style.cursor = "default";
+				};
+				rewrite.onmouseover = function() {
+					rewrite.style.color = "white";
+					rewrite.style.cursor = "pointer";
+				};
+				rewrite.onmouseleave = function() {
+					rewrite.style.color = "lightgray";
+					rewrite.style.cursor = "default";
+				};
+
+                quit.onclick = function() {
+                    window.location.href = "/dismiss/"
+                };
+				web_jindu_width = Math.ceil({{ user.team.web }} / {{web}} * 100);
+                misc_jindu_width = Math.ceil({{ user.team.misc }} / {{misc}}* 100);
+                pwn_jindu_width = Math.ceil({{ user.team.pwn }} / {{ pwn }}* 100);
+                crypto_jindu_width = Math.ceil({{ user.team.crypto }} / {{ crypto }} * 100);
+                reverse_jindu_width = Math.ceil({{ user.team.reverse }} / {{ reverse }} * 100);
+
+                web_bar.style.width = list[web_jindu_width];
+                misc_bar.style.width = list[misc_jindu_width];
+                pwn_bar.style.width = list[pwn_jindu_width];
+                crypto_bar.style.width = list[crypto_jindu_width];
+                reverse_bar.style.width = list[reverse_jindu_width];
+
+			}
+		</script>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-md-3 col-lg-3 col-sm-3" id="left_block"> <!-- 左侧部分：队名、队长、信息 -->
+					<div id="teamname">
+						{{ user.team.team_name }}
+						<span id="rename">
+							<button type="button" data-toggle="modal" data-target="#myModal" style="background: none; border: none;">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+
+							<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 改写战队名 -->
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h2 class="modal-title" id="myModalLabel"></h2>
+							      </div>
+							      <div class="modal-body">
+
+									  <form method="post" action="/team_name_rewrite/">
+											<div class="form-group">
+												<label style="color: black;">Rename Your Team:</label>
+												<input type="text" class="form-control" placeholder="New Teamname" name="newname"/>
+											</div>
+											<div class="form-group">
+												<button type="submit" class="form-control btn btn-success" style="width: 30%;">OK</button>
+                                                {% csrf_token %}
+											</div>
+									  </form>
+
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							  </div>
+							</div> <!-- 模态框结束 -->
+
+						</span> <!-- 改写队名 -->
+					</div>
+
+					<div id="leader">
+						<span class="glyphicon glyphicon-king"></span>
+						{{user.username}}
+					</div>
+
+					<div id="member">
+						<span class="glyphicon glyphicon-knight"></span>
+						Member: {{ user.team.member_num }} / 5
+					</div>
+
+					<div id="solved">
+						<span class="glyphicon glyphicon-check"></span>
+						Solved: {{ user.team.answers }}
+					</div>
+
+					<div id="rank">
+						<span class="glyphicon glyphicon-list-alt"></span>
+						Scores: {{ user.team.scores }}
+					</div>
+
+					<div id="motto">
+						<span class="glyphicon glyphicon-screenshot"></span>
+						{{ user.team.motto }}
+						<span id="rewrite">
+							<button type="button" data-toggle="modal" data-target="#myModal2" style="background: none; border: none;">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</button>
+
+							<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 改写战队通知 -->
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							        <h2 class="modal-title" id="myModalLabel"></h2>
+							      </div>
+							      <div class="modal-body">
+
+									  <form method="post" action="/team_motto_rewrite/">
+											<div class="form-group">
+												<label style="color: black;">Your New Motto:</label>
+												<input type="text" class="form-control" placeholder="New Motto" name="newmotto"/>
+											</div>
+											<div class="form-group">
+												<button type="sbmit" class="form-control btn btn-success" style="width: 30%;">OK</button>
+                                                {% csrf_token %}
+											</div>
+									  </form>
+
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							      </div>
+							    </div>
+							  </div>
+							</div> <!-- 模态框结束 -->
+						</span> <!-- 改写队伍通知 -->
+					</div>
+
+				</div> <!-- 左侧部分结束 -->
+
+				<div class="col-md-7 col-lg-7 col-sm-7" id="main_block"> <!-- 主体部分：题目完成情况 -->
+
+					<div id="tuli">
+						<span id="web" style="color: greenyellow;">
+							WEB
+						</span>
+						<span id="misc" style="color: red;">
+							MISC
+						</span>
+						<span id="pwn" style="color: lightblue;">
+							PWN
+						</span>
+						<span id="crypto" style="color: orange;">
+							CRYPTO
+						</span>
+						<span id="reverse" style="color: blue;">
+							REVERSE
+						</span>
+					</div> <!-- 图例结束 -->
+
+					<div id="jindu">
+						<div class="progress" id="web_jindu">
+							<div id="web_bar" class="progress-bar progress-bar-success" role="progressbar">
+								{{ user.team.web }} / {{ web }}
+							</div>
+						</div>
+
+						<div class="progress" id="misc_jindu">
+							<div id="misc_bar" class="progress-bar progress-bar-danger" role="progressbar">
+								{{ user.team.misc }} / {{ misc }}
+							</div>
+						</div>
+
+						<div class="progress" id="pwn_jindu">
+							<div id="pwn_bar" class="progress-bar progress-bar-info" role="progressbar">
+								{{user.team.pwn}} / {{ pwn }}
+							</div>
+						</div>
+
+						<div class="progress" id="crypto_jindu">
+							<div id="crypto_bar" class="progress-bar progress-bar-warning" role="progressbar">
+								{{ user.team.crypto }} / {{ crypto }}
+							</div>
+						</div>
+
+						<div class="progress" id="reverse_jindu">
+							<div id="reverse_bar" class="progress-bar progress-bar-primary" role="progressbar">
+								{{ user.team.reverse }} / {{ reverse }}
+							</div>
+						</div>
+
+					</div> <!-- 进度条部分结束 -->
+				</div> <!-- 主体部分结束 -->
+
+				<div class="col-md-2 col-lg-2 col-sm-2" id="right_block"> <!-- 右侧：各种按钮 -->
+					<div id="btns">
+						<div id="home" class="normal">
+							<span class="glyphicon glyphicon-hand-right"></span>
+							HomePage
+						</div>
+
+						<div id="member_list" class="normal">
+							<button type="button" data-toggle="modal" data-target="#myModal3" style="background: none; border: none;">
+								<span class="glyphicon glyphicon-hand-right"></span>
+									Members
+							</button>
+						</div>
+
+						<div id="modal_member">
+							<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 显示队伍成员 -->
+							  <div class="modal-dialog" role="document">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<h2 class="modal-title" id="myModalLabel">All Members</h2>
+								  </div>
+								  <div class="modal-body">
+									  <div class="row">
+										  <div class="col-md-12">
+											  <table class="table table-hover">
+													<tr>
+														<td>#</td>
+														<td>Member</td>
+														<td>Solved</td>
+                                                        <td></td>
+													</tr>
+													{% for teammate in teammate_list %}
+													<tr>
+														<td>{{ forloop.counter }}</td>
+														<td>{{ teammate.username }}</td>
+														<td>{{ teammate.answers }}</td>
+                                                        {% if teammate.username == user.team.leader %}
+                                                            <td> </td>
+                                                        {% else %}
+                                                            <td class="kick">&times;</td>
+                                                        {% endif %}
+													</tr>
+                                                  {% endfor %}
+											  </table>
+										  </div>
+									  </div>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								  </div>
+								</div>
+							  </div>
+							</div> <!-- 模态框结束 -->
+						</div>
+
+                        <div id="application" class="normal">
+							<button type="button" data-toggle="modal" data-target="#myModal4" style="background: none; border: none;">
+								<span class="glyphicon glyphicon-hand-right"></span>
+									Applications
+							</button>
+						</div>
+
+						<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <!-- 显示队伍成员 -->
+						  <div class="modal-dialog" role="document">
+							<div class="modal-content">
+							  <div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h2 class="modal-title" id="myModalLabel">All Applications</h2>
+							  </div>
+							  <div class="modal-body">
+								  <div class="row">
+									  <div class="col-md-12">
+										  <table class="table table-striped" id="apply">
+											  <tr>
+												  <td>Applicant</td>
+												  <td>Time</td>
+												  <td></td>
+												  <td></td>
+											  </tr>
+                                              {% for application in application_list %}
+											  <tr>
+												  <td>{{ application.user.username }}</td>
+												  <td>{{ application.apply_time }}</td>
+												  <td class="Agree">Agree</td>
+												  <td class="Deny">Deny</td>
+											  </tr>
+                                              {% endfor %}
+										  </table>
+									  </div>
+								  </div>
+							  </div>
+							  <div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							  </div>
+							</div>
+						  </div>
+						</div> <!-- 模态框结束 -->
+
+						<div id="quit" class="normal">
+							<span class="glyphicon glyphicon-hand-right"></span>
+							Dismiss
+						</div>
+
+					</div>
+				</div> <!-- 右侧部分结束 -->
+
+			</div> <!-- row -->
+
+		</div> <!-- container -->
+	</body>
+</html>

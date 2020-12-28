@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Problems</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			#bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+			.hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			#lef_nav {
+				height: 770px;
+				background-color: whitesmoke;
+				border-right: 3px double #000000;
+			}
+			.pill {
+				font-size: 28px;
+				margin-top: 60px;
+				font-family: "Italic";
+				text-align: center;
+				font-weight: bold;
+			}
+			.pill:hover {
+				cursor: pointer;
+				color: gold;
+			}
+			.active {
+				border-bottom: 1px solid gold;
+				color: red;
+			}
+			#main_block {
+				height: 700px;
+				background-color: white;
+				
+			}
+			body {
+				background-color: lightgray;
+			}
+			.problem {
+				font-size: 30px;
+				font-family: "times new roman";
+			}
+			a:link {
+				text-decoration: none;
+			}
+            #logo {
+				font-family: "Calibri (正文)";
+				font-size: 30px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+		</style>
+		
+		<script>
+			
+			window.onload = function() {
+				var problems = document.getElementById("problems");
+				var teams = document.getElementById("teams");
+				var rank = document.getElementById("rank");
+				var login = document.getElementById("login");
+				var register = document.getElementById("register");
+				var web = document.getElementById("web");
+				var pwn = document.getElementById("pwn");
+				var misc = document.getElementById("misc");
+				var crypto = document.getElementById("crypto");
+				var reverse = document.getElementById("reverse");
+				var all = document.getElementById("all");
+
+				problems.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+                };
+                problems.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+                };
+				
+				rank.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				rank.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				teams.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				teams.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				login.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				login.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				register.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				register.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				<!-- 导航栏按钮 -->
+				problems.onclick = function() {
+					window.location.href = "/problems/"
+				};
+				rank.onclick = function() {
+					window.location.href = "../rank/?type=1&page=1"
+				};
+
+				teams.onclick = function() {
+				        window.location.href = "/team/"
+				};
+
+				login.onclick = function() {
+                    {% if login_name %}
+                        window.location.href = '/logout/'
+                    {% else %}
+				        window.location.href = "/login/"
+                    {% endif %}
+				};
+				register.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/info/?id={{ user.id }}'
+                    {% else %}
+				        window.location.href = "/regist/"
+                    {% endif %}
+				};
+
+				all.onclick = function(){
+				    window.location.href = "/problems"
+                };
+				web.onclick = function() {
+					window.location.href = "/problems/web"
+				};
+				pwn.onclick = function() {
+					window.location.href = "/problems/pwn"
+				};
+				misc.onclick = function() {
+					window.location.href = "/problems/misc"
+				};
+				crypto.onclick = function() {
+					window.location.href = "/problems/crypto"
+				};
+				reverse.onclick = function() {
+					window.location.href = "/problems/reverse"
+				};
+                document.getElementById("logo").onclick = function() {
+                    window.location.href = "/"
+                }
+
+			}
+			
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			
+			<!-- 导航条 -->
+				<div id="bar" class="row">
+                    <div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+					
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+					
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Team
+						</span>
+					</div>
+					
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div> 
+			<!-- 导航条结束 -->
+			
+			<div class="row">
+				<div class="col-md-2 col-lg-2 col-sm-2" id="lef_nav"> <!-- 左侧导航栏 -->
+					{% if pro_type == 'web' %}
+                        <div class="pill" id="all">ALL</div>
+                        <div class="pill active" id="web">WEB</div>
+                        <div class="pill" id="pwn">PWN</div>
+                        <div class="pill" id="misc">MISC</div>
+                        <div class="pill" id="crypto">CRYPTO</div>
+                        <div class="pill" id="reverse">REVERSE</div>
+                    {% elif pro_type == 'pwn' %}
+                        <div class="pill" id="all">ALL</div>
+                        <div class="pill" id="web">WEB</div>
+                        <div class="pill active" id="pwn">PWN</div>
+                        <div class="pill" id="misc">MISC</div>
+                        <div class="pill" id="crypto">CRYPTO</div>
+                        <div class="pill" id="reverse">REVERSE</div>
+                    {% elif pro_type == 'misc' %}
+                        <div class="pill" id="all">ALL</div>
+                        <div class="pill" id="web">WEB</div>
+                        <div class="pill" id="pwn">PWN</div>
+                        <div class="pill active" id="misc">MISC</div>
+                        <div class="pill" id="crypto">CRYPTO</div>
+                        <div class="pill" id="reverse">REVERSE</div>
+                    {% elif pro_type == 'crypto' %}
+                        <div class="pill" id="all">ALL</div>
+                        <div class="pill" id="web">WEB</div>
+                        <div class="pill" id="pwn">PWN</div>
+                        <div class="pill" id="misc">MISC</div>
+                        <div class="pill active" id="crypto">CRYPTO</div>
+                        <div class="pill" id="reverse">REVERSE</div>
+                    {% elif pro_type == 'reverse' %}
+                        <div class="pill" id="all">ALL</div>
+                        <div class="pill" id="web">WEB</div>
+                        <div class="pill" id="pwn">PWN</div>
+                        <div class="pill" id="misc">MISC</div>
+                        <div class="pill" id="crypto">CRYPTO</div>
+                        <div class="pill active" id="reverse">REVERSE</div>
+                    {% else %}
+                        <div class="pill active" id="all">ALL</div>
+                        <div class="pill" id="web">WEB</div>
+                        <div class="pill" id="pwn">PWN</div>
+                        <div class="pill" id="misc">MISC</div>
+                        <div class="pill" id="crypto">CRYPTO</div>
+                        <div class="pill" id="reverse">REVERSE</div>
+					{% endif %}
+				</div> <!-- 导航栏结束 -->
+				
+				<div class="col-md-9 col-lg-9 col-sm-9 col-md-push-1" id="main_block">
+					<div class="problem">
+						
+						<table class="table table-hover">
+							<tr>
+								<td>No.</td>
+								<td>Title</td>
+								<td>Score</td>
+								<td>Solved</td>
+								<td>Type</td>
+							</tr>
+							{% for problem in problem_list %}
+							<tr>
+								<td>{{ forloop.counter }}</td>
+								<td>
+									<a href="/problem/?id={{ problem.id }}">{{problem.title}}</a>
+								</td>
+								<td>{{ problem.scores }}</td>
+								<td>{{ problem.answered_user_number }}</td>
+								<td>{{ problem.get_type_display }}</td>
+							</tr>
+                            {% endfor %}
+
+						</table>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	</body>
+</html>

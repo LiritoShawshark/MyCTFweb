@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Rank</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			#header {
+				border-bottom: 10px double blanchedalmond;
+				font-family: "CommercialScript BT";
+				font-size: 40px;
+				text-align: center;
+				margin: 10px;
+			}
+			.table {
+				font-size: 40px;
+				font-family: "times new roman";
+			}
+			#bar {
+				background-color: #222222;
+				margin-bottom: 30px;
+			}
+            #logo {
+				font-family: "Calibri (正文)";
+				font-size: 30px;
+				color: whitesmoke;
+				text-align: center;
+				background-color: black;
+				background-image: linear-gradient(to right, #777777, #222222);
+			}
+			#logo:hover {
+				cursor:pointer;
+			}
+			.normal {
+				color: lightgray;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				border-right: lightgray;
+			}
+			.hover {
+				cursor: pointer;
+				color: ghostwhite;
+				font-size: 30px;
+				font-family: "Italic";
+				text-align: center;
+				background-color: black;
+			}
+			body {
+				background: lightgray;
+			}
+		</style>
+		
+		<script>
+			window.onload = function() {
+				var problems = document.getElementById("problems");
+				var teams = document.getElementById("teams");
+				var rank = document.getElementById("rank");
+				var login = document.getElementById("login");
+				var register = document.getElementById("register");
+				
+				problems.onmouseover = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+                };
+                problems.onmouseout = function() {
+							this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+                };
+				
+				rank.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				rank.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				teams.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				teams.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				login.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				login.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				register.onmouseover = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 hover";
+				};
+				register.onmouseout = function() {
+					this.className = "col-md-2 col-sm-2 col-lg-2 normal";
+				};
+				
+				<!-- 导航栏按钮 -->
+				problems.onclick = function() {
+					window.location.href = "/problems/"
+				};
+				rank.onclick = function() {
+					window.location.href = "/rank/"
+				};
+				teams.onclick = function() {
+					window.location.href = "/team/"
+				};
+				login.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/logout/'
+                    {% else %}
+				        window.location.href = "/login/"
+                    {% endif %}
+				};
+				register.onclick = function() {
+					{% if login_name %}
+                        window.location.href = '/info/?id={{ user.id }}'
+                    {% else %}
+				        window.location.href = "/regist/"
+                    {% endif %}
+				};
+				 document.getElementById("logo").onclick = function() {
+                    window.location.href = "/"
+                }
+			}
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			
+			<!-- 导航条 -->
+				<div id="bar" class="row">
+                    <div id="logo" class="col-md-2 col-sm-2 col-lg-2">
+						<span class="glyphicon glyphicon-bishop" style="font-size: 20px;"></span>
+						GL_CTF
+					</div>
+					<div id="problems" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Problems
+						</span>
+					</div>
+					
+					<div id="rank" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Rank
+						</span>
+					</div>
+					
+					<div id="teams" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							Team
+						</span>
+					</div>
+					
+					<div  id="login" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                LogOut
+                            {% else %}
+                                LogIn
+                            {% endif %}
+						</span>
+					</div>
+					
+					<div id="register" class="col-md-2 col-sm-2 col-lg-2 normal">
+						<span>
+							{% if login_name %}
+                                {{login_name}}
+                            {% else %}
+                                Register
+                            {% endif %}
+						</span>
+					</div>
+				</div> 
+			<!-- 导航条结束 -->
+			
+			<div class="row" style="background-color: lightgray;">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" style="background-color: ghostwhite;">
+					
+					<div id="header">
+						Personal Rank
+					</div>
+					
+					<table class="table table-striped">
+						<tr>
+							<td>Rank</td>
+							<td>User</td>
+							<td>Score</td>
+							<td>Solve</td>
+							<td>Team</td>
+						</tr>
+                        {% for user in user_list %}
+						<tr>
+							<td>{{forloop.counter}}</td>
+                            <td>
+                                <a href = "../info/?id={{ user.id }}">{{user.username}}</a>
+                            </td>
+							<td>{{user.scores}}</td>
+							<td>{{user.answers}}</td>
+                            {% if user.team != None %}
+							    <td>{{user.team.team_name}}</td>
+                            {% else %}
+                                <td></td>
+                            {% endif %}
+						</tr>
+                        {% endfor %}
+					</table>
+				</div>
+			</div> <!-- 个人榜单结束 -->
+			
+			<div class="row" style="background-color: lightgray; margin-top: 2%;">
+				<div class="col-md-offset-1 col-lg-offset-1 col-sm-offset-1 col-md-10 col-lg-10 col-sm-10" style="background-color: floralwhite;">
+					
+					<div id="header">
+						Team Rank
+					</div>
+					
+					<table class="table table-striped">
+						<tr>
+							<td>Rank</td>
+							<td>Team</td>
+							<td>Leader</td>
+							<td>Score</td>
+							<td>Member</td>
+						</tr>
+                        {% for team in team_list %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ team.team_name }}</td>
+							<td>{{ team.leader }}</td>
+							<td>{{ team.scores }}</td>
+							<td>{{ team.member_num }}</td>
+						</tr>
+                        {% endfor %}
+
+					</table>
+				</div>
+			</div> <!-- 战队榜单结束 -->
+		</div>
+	</body>
+</html>

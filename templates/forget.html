@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Password</title>
+        <link rel="icon" href="../static/images/tag.jpg" sizes="32x32">
+		
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			body {
+				background-image: url(../static/images/forget.jpg);
+				background-size: cover;
+			}
+			form {
+				color: orange;
+				padding: 30px;
+				margin-top: 5%;
+				font-size: 20px;
+				font-family: "Italic";
+				background-color: rgba(0, 0, 0, 0.3);
+				border-radius: 20px;
+			}
+			.form-group {
+				margin-bottom: 35px;
+			}
+			button {
+				width: 100px;
+				font-size: 20px;
+				font-weight: bolder;
+				margin-top: -100px;
+			}
+		</style>
+		
+		<script>
+			window.onload = function()
+			{
+				var back = document.getElementById("back");
+				
+				back.onclick = function() {
+					window.location.href = "../login/"
+				}
+			}
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				
+				<div class="col-md-offset-3 col-sm-offset-3 col-lg-offset-3 col-md-6 col-sm-6 col-lg-6">
+					<div style="font-family: Italic; font-size: 30px; text-align: center; margin-top: 5%; color: white;">
+						Retrieve OR Change Your Password
+					</div>
+					
+					<form action="/forget/" method="post">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="name">UserName</label>
+							<input type="text" maxlength="10" class="form-control" name="username" id="name" placeholder="username" />
+						</div>
+						
+						<div class="form-group">
+							<label for="stu_id">StudentID</label>
+							<input type="number" class="form-control" name="stu_id" id="stu_id" placeholder="student id" />
+						</div>
+
+                        {% if message %}
+                        <div class="form-group has-success has-feedback">
+                          <label for="pw1">Original Password</label>
+                          <input type="text" class="form-control" id="pw1" aria-describedby="pw1Status" placeholder="{{message}}" name="pw1" readonly />
+                          <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" style="margin-top: 1%"></span>
+                          <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                        </div>
+                        {% else %}
+                        <div class="form-group">
+							<label for="pw1">Original Password</label>
+                                <input type="text" class="form-control" placeholder="----------" id="pw1" name="pw1" readonly />
+						</div>
+						{% endif %}
+						<div class="form-group">
+							<label for="pw2">New Password</label>
+							<input type="text" class="form-control" placeholder="----------" id="pw2" name="pw2" readonly />
+						</div>
+						
+						<div class="form-group">
+							<span id="info" class="col-md-9 col-sm-9 col-lg-9" style="color: white;">
+                            <h1>
+                                {% if message %}
+                                    We have found back your password.
+                                    {% else %}
+                                    <br/>
+                                {% endif %}
+                            </h1>
+							</span>
+							<button type="submit" class="btn btn-info col-md-offset-10">OK</button>
+						</div>
+						<div class="form-group">
+							<button type="button" class="btn btn-info col-md-offset-10" id="back">GoBack</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

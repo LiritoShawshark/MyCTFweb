@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>UPLOAD</title>
+		<link rel="icon" href="../static/images/tag.png" sizes="32x32">
+		<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<style>
+			body {
+				background-image: url(../static/images/wp.jpg);
+				background-size: 100%;
+			}
+			#main {
+				margin-top: 10%;
+			}
+			#form {
+				font-family: "Italic";
+				font-size: 30px;
+				color: white;
+				padding: 20px;
+				margin: 10px;
+				border: 2px solid orange;
+				border-radius: 10px;
+				background-color: rgba(255, 255, 255, 0.1);
+			}
+			#file {
+				border: 1px solid white;
+				border-radius: 3px;
+			}
+			.form-group {
+				margin: 40px;
+			}
+			#title {
+				font-size: 21px;
+				color: yellow;
+				text-shadow: 1px 1px 1px 1px;
+			}
+		</style>
+		
+		<script>
+			window.onload = function() {
+				var file = document.getElementById("file");
+				var wp_upload = document.getElementById("wp_upload");
+				var fill = document.getElementById("fill");
+
+
+				function check() {
+					if (document.getElementById("file").files[0])
+					{
+							document.getElementById("fill").innerHTML = document.getElementById("file").files[0].name;
+					}
+
+				}
+
+				file.onclick = function() {
+					setInterval(check, 100);
+				}
+			}
+			
+		</script>
+	</head>
+	
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				
+				<div id="main" class="col-md-offset-3 col-lg-offset-3 col-sm-offset-3 col-md-6 col-lg-6 col-sm-6">
+					<form action="/wp_upload/{{ problem.id }}" method="post" id="form" enctype="multipart/form-data">
+						<div class="form-group" id="title">
+							Share your knowledge to continue a timeless tradition.
+						</div>
+						<div class="form-group">
+							<label for="title">Title</label>
+							<input type="text" maxlength="20" name="title" class="form-control" />
+						</div>
+						
+						<div class="form-group">
+							<label for="introduction">Introduction</label>
+							<textarea class="form-control" rows="3" name="introduction"></textarea>
+						</div>
+						
+						<div class="form-group">
+							<label for="file">
+								<span class="glyphicon glyphicon-hand-right"></span>
+								Choose Your File
+							</label>
+							<input type="file" id="file" name="file" style="display: none;" accept="application/pdf" />
+							<span id="fill"></span>
+						</div>
+						
+						<div class="form-group">
+							<button id="wp_upload" type="submit" class="btn btn-success btn-lg col-lg-offset-5">UPLOAD</button>
+						</div>
+                        {% csrf_token %}
+					</form>
+				</div>
+			</div>
+		</div>
+        {% if message %}
+            <script type="text/javascript">
+                alert("{{message}}");
+                {% if message == 'upload successfully' %}
+                    setTimeout(window.location.href = "/problem/?id={{ problem.id }}", 1000);
+                {% endif %}
+            </script>
+        {% endif %}
+	</body>
+</html>
